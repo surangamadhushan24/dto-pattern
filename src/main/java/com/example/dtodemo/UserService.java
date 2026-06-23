@@ -1,6 +1,5 @@
 package com.example.dtodemo;
 
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -8,11 +7,12 @@ import org.springframework.stereotype.Service;
 public class UserService {
 	
 	private final UserRepository userRepository;
-	
+	private final UserMapper userMapper;
 	
 
-	public UserService(UserRepository userRepository) {
+	public UserService(UserRepository userRepository, UserMapper userMapper) {
 		this.userRepository = userRepository;
+		this.userMapper = userMapper;
 	}
 
 
@@ -20,11 +20,7 @@ public class UserService {
 	public UserResponseDTO getUserById(Long id) {
 		UserEntity userEntity =  userRepository.findById(id)
 				.orElseThrow(()->new RuntimeException("user not found"));
-		UserResponseDTO userResponseDTO = new UserResponseDTO();
-		userResponseDTO.setId(userEntity.getId());
-		userResponseDTO.setName(userEntity.getName());
-		userResponseDTO.setEmail(userEntity.getEmail());
-	
+		UserResponseDTO userResponseDTO  = userMapper.toDto(userEntity);
 		return userResponseDTO;
 	}
 
