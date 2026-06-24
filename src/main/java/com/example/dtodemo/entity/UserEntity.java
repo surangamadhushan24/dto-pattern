@@ -1,4 +1,4 @@
-package com.example.dtodemo;
+package com.example.dtodemo.entity;
 
 
 import jakarta.persistence.*;
